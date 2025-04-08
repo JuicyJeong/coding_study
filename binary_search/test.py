@@ -1,50 +1,36 @@
-'''
-1920번
+''' 첫째 줄에는 오영식이 이미 가지고 있는 랜선의 개수 K, 그리고 필요한 랜선의 개수 N이 입력된다.
+ K는 1이상 10,000이하의 정수이고, N은 1이상 1,000,000이하의 정수이다. 그리고 항상 K ≦ N 이다. 
+ 그 후 K줄에 걸쳐 이미 가지고 있는 각 랜선의 길이가 센티미터 단위의 정수로 입력된다. 
+ 랜선의 길이는 231-1보다 작거나 같은 자연수이다.
+ 
+ 첫째 줄에 N개를 만들 수 있는 랜선의 최대 길이를 센티미터 단위의 정수로 출력한다.
+ '''
 
-N개의 정수 A[1], A[2], …, A[N]이 주어져 있을 때, 이 안에 X라는 정수가 존재하는지 알아내는 프로그램을 작성하시오.
-
-첫째 줄에 자연수 N(1 ≤ N ≤ 100,000)이 주어진다. 
-다음 줄에는 N개의 정수 A[1], A[2], …, A[N]이 주어진다. 
-다음 줄에는 M(1 ≤ M ≤ 100,000)이 주어진다. 
-다음 줄에는 M개의 수들이 주어지는데, 이 수들이 A안에 존재하는지 알아내면 된다. 모든 정수의 범위는 -2^31 보다 크거나 같고 2^31보다 작다.
-
-M개의 줄에 답을 출력한다. 존재하면 1을, 존재하지 않으면 0을 출력한다.
-
-'''
-
-##########################YOUR CODE##################################
 import sys
 
-N = int(sys.stdin.readline())
-A = list(map(int, sys.stdin.readline().split()))
-A.sort()
+K , N = map(int, sys.stdin.readline().split())
+arr = []
+for _ in range(K):
+    
+    arr.append(int(sys.stdin.readline()))
 
-M = int(sys.stdin.readline())
-arr_M = list(map(int, sys.stdin.readline().split()))
+# 자를 길이 값
+start = 1
+end = max(arr)
 
+while start<=end:
+    mid = (start + end) // 2
 
+    sum = 0
+    for cable in arr:
+        sum += (cable // mid)
 
-for num_M in range(len(arr_M)):
-    found = False
-    start = 0
-    end = N-1
-
-    while start<=end:
-        mid = (start + end)//2
+    if sum < N : #나온 선이 너무 적으면 
+            end = mid - 1 
+    else : #나온 선이 너무 많으면 
+            start = mid + 1
+            
         
-        if arr_M[num_M] == A[mid]:
-            found = True
-            break
-        elif arr_M[num_M] > A[mid]:
-            start = mid +1
-        else:
-            end = mid - 1
-    if not found:
+print(end)
 
-        # result.append(0)
-        print(0)
-    else:
-        # result.append(1)
-        print(1)
 
-# print(*result)
